@@ -22,7 +22,6 @@ public class Ball : MonoBehaviour {
         }
     }
     private void OnCollisionEnter(Collision collision) {
-        print("you collided");
         var bumper = collision.gameObject.GetComponent<Bumper>();
         if (bumper != null) {
             bumper.Bump();
