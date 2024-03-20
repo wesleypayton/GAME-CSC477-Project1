@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BallEnd
+  - Ball
+  - FlipperLeft
+  - BallStart
+  - FlipperRight
+  - ScoreCircle
+  - gameHUD
   layers:
   - Default
   - TransparentFX
