@@ -13,6 +13,7 @@ public class Ball : MonoBehaviour {
     private Rigidbody rb;
     private int lives;
     private const int MAX_LIVES = 4;
+    private bool launched = false;
 
     void Start() {
         lives = MAX_LIVES;
@@ -20,8 +21,11 @@ public class Ball : MonoBehaviour {
     }
 
     public void Launch() {
-        float actualLaunchForce = Random.Range(launchForce * 0.8f, launchForce * 1.2f);
-        rb.AddForce(Vector3.forward * actualLaunchForce, ForceMode.Impulse);
+        if (launched == false) {
+            float actualLaunchForce = Random.Range(launchForce * 0.8f, launchForce * 1.2f);
+            rb.AddForce(Vector3.forward * actualLaunchForce, ForceMode.Impulse);
+            launched = true;
+        }
     }
     public void Restart() {
         transform.position = GameObject.FindGameObjectWithTag("BallStart").transform.position;
@@ -37,6 +41,7 @@ public class Ball : MonoBehaviour {
         if (other.CompareTag("BallEnd")) {
             transform.position = GameObject.FindGameObjectWithTag("BallStart").transform.position;
             rb.velocity = Vector3.zero;
+            launched = false;
             // Disable corresponding life graphic with each life lost
             if (lives > 0) {
                 gameHUD.transform.Find("Ball" + lives.ToString()).gameObject.SetActive(false);
