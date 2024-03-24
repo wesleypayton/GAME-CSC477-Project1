@@ -6,12 +6,15 @@ using UnityEngine;
 public class Flipper : MonoBehaviour {
     private Rigidbody rb;
     public float force;
+    private AudioSource flipClip;
 
     void Start() {
         rb = GetComponent<Rigidbody>();
+        flipClip = GetComponent<AudioSource>();
     }
 
     public void Flip() {
         rb.AddForce(Vector3.forward * force, ForceMode.Impulse);
+        flipClip.Play();
     }
 }

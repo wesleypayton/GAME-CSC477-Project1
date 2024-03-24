@@ -5,9 +5,11 @@ using UnityEngine;
 public class Bumper : MonoBehaviour {
     private Renderer ren;
     private float t;
+    private AudioSource bumpClip;
 
     void Start() {
         ren = GetComponent<Renderer>();
+        bumpClip = GetComponent<AudioSource>();
         t = 0;
     }
 
@@ -25,5 +27,6 @@ public class Bumper : MonoBehaviour {
     public void Bump() {
         ren.material.SetColor("_BaseColor", Color.green);
         t = 1;
+        bumpClip.Play();
     }
 }
