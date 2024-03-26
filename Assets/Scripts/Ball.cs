@@ -9,21 +9,21 @@ public class Ball : MonoBehaviour {
     public Menu menu;
     public GameObject gameHUD;
     public ParticleSystem sparks_PS;
+    public bool launched = false;
 
     // private fields
     private Rigidbody rb;
     private int lives;
     private const int MAX_LIVES = 4;
-    private bool launched = false;
 
     void Start() {
         lives = MAX_LIVES;
         rb = GetComponent<Rigidbody>();
     }
 
-    public void Launch() {
+    public void Launch(float forceApplied) {
         if (launched == false) {
-            float actualLaunchForce = Random.Range(launchForce * 0.8f, launchForce * 1.2f);
+            float actualLaunchForce = launchForce * forceApplied;
             rb.AddForce(Vector3.forward * actualLaunchForce, ForceMode.Impulse);
             launched = true;
         }
@@ -52,7 +52,10 @@ public class Ball : MonoBehaviour {
             if (lives < 0) {
                 menu.GameOver();
             }
+        } else if (other.CompareTag("BallStart")) {
+            launched = false;
         }
+
     }
     private void OnCollisionEnter(Collision collision) {
         var bumper = collision.gameObject.GetComponent<Bumper>();

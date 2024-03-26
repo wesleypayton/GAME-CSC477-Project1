@@ -10,11 +10,19 @@ public class Game : MonoBehaviour {
     public Ball ball;
     public Score score;
 
+    // Private variables
+    private float forceApplied;
+    private float chargeMultiplier = 0f;
+    private float chargeRate = 0.35f;
+    private bool isCharging = false;
+    private ParticleSystem chargeParticles;
+
 
     public static Game Instance 
         { get; private set; }
 
     void Awake() {
+        chargeParticles = GameObject.FindGameObjectWithTag("BallStart").GetComponent<ParticleSystem>();
         input = new PinballInput();
         input.Enable();
         Instance = this;
@@ -27,8 +35,37 @@ public class Game : MonoBehaviour {
         else if (input.Default.FlipperRight.WasPressedThisFrame()) {
             flipperRight.Flip();
         }
+        else if (input.Default.LaunchBall.WasPressedThisFrame()) {
+            if (ball.launched == false) {
+                isCharging = true;
+                StartCoroutine(ChargeLaunchForce());
+            }
+        }
         else if (input.Default.LaunchBall.WasReleasedThisFrame()) {
-            ball.Launch();
+            if (ball.launched == false) {
+                isCharging = false;
+                StopCoroutine(ChargeLaunchForce());
+                float forceApplied = 0.4f + chargeMultiplier; // Apply the charge multiplier
+                print(forceApplied);
+                ball.Launch(forceApplied);
+                chargeMultiplier = 0f; // Reset charge multiplier after launch
+            }
+        }
+    }
+
+    private IEnumerator ChargeLaunchForce() {
+        while (isCharging) {
+            chargeParticles.Emit(30);
+            print(chargeMultiplier);
+            chargeMultiplier += Time.deltaTime * chargeRate;
+            if (chargeMultiplier >= 2.0f) {
+                isCharging = false;
+                forceApplied = 0.4f + chargeMultiplier; // Apply the charge multiplier
+                print(forceApplied);
+                ball.Launch(forceApplied);
+                chargeMultiplier = 0f; // Reset charge multiplier after launch
+            }
+            yield return null;
         }
     }
 
