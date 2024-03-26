@@ -5,8 +5,8 @@ using UnityEngine;
 public class Menu : MonoBehaviour {
     public GameObject mainMenu;
     public GameObject gameoverMenu;
-    public AudioSource menuMusic;
-    public AudioSource gameMusic;
+    private AudioSource menuMusic;
+    private AudioSource gameMusic;
 
     void Start() {
         menuMusic = GameObject.FindGameObjectWithTag("MenuMusic").GetComponent<AudioSource>();

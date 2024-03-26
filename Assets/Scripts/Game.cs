@@ -37,12 +37,14 @@ public class Game : MonoBehaviour {
         }
         else if (input.Default.LaunchBall.WasPressedThisFrame()) {
             if (ball.launched == false) {
+                ball.chargeSound.Play();
                 isCharging = true;
                 StartCoroutine(ChargeLaunchForce());
             }
         }
         else if (input.Default.LaunchBall.WasReleasedThisFrame()) {
             if (ball.launched == false) {
+                ball.chargeSound.Stop();
                 isCharging = false;
                 StopCoroutine(ChargeLaunchForce());
                 float forceApplied = 0.4f + chargeMultiplier; // Apply the charge multiplier
@@ -59,6 +61,7 @@ public class Game : MonoBehaviour {
             print(chargeMultiplier);
             chargeMultiplier += Time.deltaTime * chargeRate;
             if (chargeMultiplier >= 2.0f) {
+                ball.chargeSound.Stop();
                 isCharging = false;
                 forceApplied = 0.4f + chargeMultiplier; // Apply the charge multiplier
                 print(forceApplied);

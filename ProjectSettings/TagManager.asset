@@ -13,6 +13,8 @@ TagManager:
   - gameHUD
   - MenuMusic
   - GameMusic
+  - LaunchSound
+  - ChargeSound
   layers:
   - Default
   - TransparentFX

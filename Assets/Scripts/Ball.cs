@@ -10,15 +10,21 @@ public class Ball : MonoBehaviour {
     public GameObject gameHUD;
     public ParticleSystem sparks_PS;
     public bool launched = false;
+    public AudioSource launchSound;
+    public AudioSource chargeSound;
 
     // private fields
     private Rigidbody rb;
     private int lives;
     private const int MAX_LIVES = 4;
+    private ParticleSystem bumperParticles;
 
     void Start() {
         lives = MAX_LIVES;
         rb = GetComponent<Rigidbody>();
+        launchSound = GameObject.FindGameObjectWithTag("LaunchSound").GetComponent<AudioSource>();
+        chargeSound = GameObject.FindGameObjectWithTag("ChargeSound").GetComponent<AudioSource>();
+        bumperParticles = GetComponent<ParticleSystem>();
     }
 
     public void Launch(float forceApplied) {
@@ -26,6 +32,7 @@ public class Ball : MonoBehaviour {
             float actualLaunchForce = launchForce * forceApplied;
             rb.AddForce(Vector3.forward * actualLaunchForce, ForceMode.Impulse);
             launched = true;
+            launchSound.Play();
         }
     }
     public void Restart() {
@@ -62,6 +69,7 @@ public class Ball : MonoBehaviour {
         var target = collision.gameObject.GetComponent<Target>();
         if (bumper != null) {
             bumper.Bump();
+            bumperParticles.Play();
             Game.Instance.AddScore(100);
         }
         if (target != null) {
