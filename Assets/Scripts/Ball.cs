@@ -59,9 +59,14 @@ public class Ball : MonoBehaviour {
     }
     private void OnCollisionEnter(Collision collision) {
         var bumper = collision.gameObject.GetComponent<Bumper>();
+        var target = collision.gameObject.GetComponent<Target>();
         if (bumper != null) {
             bumper.Bump();
             Game.Instance.AddScore(100);
+        }
+        if (target != null) {
+            target.Bump();
+            Game.Instance.AddScore(1000);
         }
         else {
             if (collision.gameObject.tag.StartsWith("Flipper")) {
