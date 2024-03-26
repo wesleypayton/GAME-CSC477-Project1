@@ -6,6 +6,7 @@ using UnityEngine;
 public class Flipper : MonoBehaviour {
     private Rigidbody rb;
     public float force;
+    public bool isFlipping;
     private AudioSource flipClip;
 
     void Start() {

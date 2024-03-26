@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour {
     public float launchForce;
     public Menu menu;
     public GameObject gameHUD;
+    public ParticleSystem sparks_PS;
 
     // private fields
     private Rigidbody rb;
@@ -61,6 +62,7 @@ public class Ball : MonoBehaviour {
         }
         else {
             if (collision.gameObject.tag.StartsWith("Flipper")) {
+                sparks_PS.Play();
                 Game.Instance.AddScore(10);
             }
             else if (collision.gameObject.CompareTag("ScoreCircle")) {
