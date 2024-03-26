@@ -11,6 +11,8 @@ TagManager:
   - FlipperRight
   - ScoreCircle
   - gameHUD
+  - MenuMusic
+  - GameMusic
   layers:
   - Default
   - TransparentFX
